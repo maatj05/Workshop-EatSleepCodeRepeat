@@ -13,6 +13,11 @@ namespace eu.sig.training.ch04.v1
             {
                 throw new BusinessException("Invalid account number!");
             }
+            return NewMethod(counterAccount, amount);
+        }
+
+        private Transfer NewMethod(string counterAccount, Money amount)
+        {
             int sum = 0;
             for (int i = 0; i < counterAccount.Length; i++)
             {
