@@ -2,7 +2,7 @@
 
 namespace eu.sig.training.ch04.v1
 {
-    public class SavingsAccount
+    public class SavingsAccount: Account
     {
         public CheckingAccount RegisteredCounterAccount { get; set; }
 
@@ -13,35 +13,9 @@ namespace eu.sig.training.ch04.v1
             {
                 throw new BusinessException("Invalid account number!");
             }
-            return NewMethod(counterAccount, amount);
+            return EatSleepCodeRepeat.AccountManager.NewMethod(counterAccount, amount, this);
         }
 
-        private Transfer NewMethod(string counterAccount, Money amount)
-        {
-            int sum = 0;
-            for (int i = 0; i < counterAccount.Length; i++)
-            {
-                sum = sum + (9 - i) * (int)Char.GetNumericValue(counterAccount[i]);
-            }
-            if (sum % 11 == 0)
-            {
-                // 2. Look up counter account and make transfer object:
-                CheckingAccount acct = Accounts.FindAcctByNumber(counterAccount);
-                Transfer result = new Transfer(this, acct, amount); // <2>
-                // 3. Check whether withdrawal is to registered counter account:
-                if (result.CounterAccount.Equals(this.RegisteredCounterAccount))
-                {
-                    return result;
-                }
-                else
-                {
-                    throw new BusinessException("Counter-account not registered!");
-                }
-            }
-            else
-            {
-                throw new BusinessException("Invalid account number!!");
-            }
-        }
+
     }
 }
